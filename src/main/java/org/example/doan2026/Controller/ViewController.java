@@ -1,5 +1,7 @@
 package org.example.doan2026.Controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.example.doan2026.Model.User;
 import org.example.doan2026.Repository.UserRepository;
@@ -28,8 +30,19 @@ public class ViewController {
 
     @PostMapping("/register")
     public String handleRegister(@Valid @ModelAttribute User user, BindingResult result, Model model) {
-        String result = authService.registerPatient(user);
-        model.addAttribute("message", result);
+
+        if (result.hasErrors()) {
+            String errorMessage = result.getFieldError().getDefaultMessage();
+            model.addAttribute("error", errorMessage);
+            return "auth";
+        }
+        try {
+            String successResult = authService.registerPatient(user);
+            model.addAttribute("message", successResult);
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+        }
+
         return "auth";
     }
 
@@ -51,5 +64,13 @@ public class ViewController {
             model.addAttribute("error", "Đăng nhập thất bại: " + e.getMessage());
             return "auth";
         }
+    }
+    @GetMapping("/logout")
+    public String handleLogout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        return "redirect:/auth/page";
     }
 }

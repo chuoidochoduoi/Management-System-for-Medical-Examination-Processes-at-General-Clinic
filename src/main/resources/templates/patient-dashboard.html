@@ -128,7 +128,7 @@
     function logout() {
         localStorage.removeItem('msme_jwt_token');
         localStorage.removeItem('msme_token_expire');
-        window.location.href = "/auth/page";
+        window.location.href = "/auth/logout";
     }
     checkSessionSecurity();
     setInterval(checkSessionSecurity, 30000);
