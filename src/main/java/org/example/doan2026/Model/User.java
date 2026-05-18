@@ -1,10 +1,7 @@
 package org.example.doan2026.Model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -46,12 +43,16 @@ public class User {
     private String phoneNumber;
 
     @Column(name = "date_of_birth")
+    @NotNull(message = "Ngày sinh không được để trống")
+    @Past(message = "Ngày sinh phải là một ngày trong quá khứ")
     private LocalDate dateOfBirth;
 
     @Column(length = 10)
+    @NotBlank(message = "Vui lòng chọn giới tính")
     private String gender;
 
     @Column(columnDefinition = "TEXT")
+    @NotBlank(message = "Địa chỉ không được để trống")
     private String address;
 
     @Column(nullable = false, length = 30)
