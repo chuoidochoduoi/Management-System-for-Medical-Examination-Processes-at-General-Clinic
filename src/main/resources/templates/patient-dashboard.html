@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSME Clinic - Hồ Sơ Bệnh Nhân</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
+
+<nav class="bg-gray-800 border-b border-gray-700 px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center space-x-3">
+        <div class="bg-blue-600 p-2 rounded-lg text-white font-bold tracking-wider">MSME</div>
+        <span class="text-xl font-bold tracking-wide text-blue-400">PHÒNG KHÁM ĐA KHOA</span>
+    </div>
+    <div class="flex items-center space-x-4">
+        <span class="text-sm bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full border border-blue-500/30 font-medium">Bệnh Nhân</span>
+        <button onclick="logout()" class="text-gray-400 hover:text-red-400 font-medium text-sm transition-colors flex items-center">
+            <i class="fa-solid fa-right-from-bracket mr-1"></i> Đăng xuất
+        </button>
+    </div>
+</nav>
+
+<main class="max-w-5xl mx-auto p-6 mt-8">
+
+    <div class="bg-gradient-to-r from-blue-900/40 to-indigo-900/40 p-6 rounded-2xl border border-blue-800 mb-8 shadow-lg">
+        <h2 class="text-2xl font-bold text-white mb-2">
+            👋 Xin chào, <span th:text="${user.fullName}" class="text-blue-400">Nguyễn Văn A</span>!
+        </h2>
+        <p class="text-gray-400 text-sm">Chào mừng bạn đến với hệ thống quản lý sức khỏe phòng khám MSME. Dưới đây là thông tin chi tiết hồ sơ bệnh nhân của bạn.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700 md:col-span-1 flex flex-col items-center text-center shadow-md">
+            <div class="w-24 h-24 bg-blue-600/20 border border-blue-500/30 rounded-full flex items-center justify-center text-blue-400 text-4xl font-bold mb-4 shadow-inner">
+                <i class="fa-solid fa-user-injured"></i>
+            </div>
+            <h3 th:text="${user.fullName}" class="text-xl font-bold text-white mb-1">Nguyễn Văn A</h3>
+            <p th:text="'@' + ${user.username}" class="text-gray-500 text-xs font-mono mb-4">@username</p>
+
+            <hr class="w-full border-gray-700 my-2">
+
+            <div class="w-full text-left space-y-3 mt-2">
+                <div>
+                    <span class="block text-xs text-gray-500 font-medium">Email liên hệ</span>
+                    <span th:text="${user.email}" class="text-sm text-gray-300 break-all">chua-co-email@gmail.com</span>
+                </div>
+                <div>
+                    <span class="block text-xs text-gray-500 font-medium">Số điện thoại</span>
+                    <span th:text="${user.phoneNumber != null && !user.phoneNumber.isEmpty() ? user.phoneNumber : 'Chưa cập nhật'}" class="text-sm text-gray-300">Chưa cập nhật</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-gray-800 p-6 rounded-2xl border border-gray-700 md:col-span-2 space-y-6 shadow-md">
+            <div>
+                <h4 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2 flex items-center">
+                    <i class="fa-solid fa-id-card mr-2 text-blue-400"></i> Thông Tin Hành Chính
+                </h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-gray-900/50 p-3 rounded-xl border border-gray-700/50">
+                        <span class="block text-xs text-gray-500 font-medium mb-1">Ngày sinh</span>
+                        <span th:text="${user.dateOfBirth != null ? user.dateOfBirth : 'Chưa cập nhật'}" class="text-sm font-semibold text-gray-200">01/01/2000</span>
+                    </div>
+                    <div class="bg-gray-900/50 p-3 rounded-xl border border-gray-700/50">
+                        <span class="block text-xs text-gray-500 font-medium mb-1">Giới tính</span>
+                        <span th:text="${user.gender != null && !user.gender.isEmpty() ? user.gender : 'Chưa cập nhật'}" class="text-sm font-semibold text-gray-200">Chưa cập nhật</span>
+                    </div>
+                    <div class="bg-gray-900/50 p-3 rounded-xl border border-gray-700/50 sm:col-span-2">
+                        <span class="block text-xs text-gray-500 font-medium mb-1">Địa chỉ cư trú</span>
+                        <span th:text="${user.address != null && !user.address.isEmpty() ? user.address : 'Chưa cập nhật'}" class="text-sm text-gray-300">Chưa cập nhật</span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-lg font-bold text-white mb-4 border-b border-gray-700 pb-2 flex items-center">
+                    <i class="fa-solid fa-notes-medical mr-2 text-green-400"></i> Hoạt Động Của Bạn
+                </h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="border border-dashed border-gray-700 p-4 rounded-xl text-center hover:border-blue-500/50 transition-colors cursor-pointer group">
+                        <div class="text-2xl text-gray-600 group-hover:text-blue-400 mb-1"><i class="fa-solid fa-calendar-check"></i></div>
+                        <span class="block text-sm font-medium text-gray-300">Đặt Lịch Hẹn Khám</span>
+                        <span class="text-xs text-gray-500">Tính năng đang phát triển</span>
+                    </div>
+                    <div class="border border-dashed border-gray-700 p-4 rounded-xl text-center hover:border-green-500/50 transition-colors cursor-pointer group">
+                        <div class="text-2xl text-gray-600 group-hover:text-green-400 mb-1"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                        <span class="block text-sm font-medium text-gray-300">Lịch Sử Bệnh Án</span>
+                        <span class="text-xs text-gray-500">Tính năng đang phát triển</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<script th:inline="javascript">
+    const tokenFromServer = /*[[${jwtToken}]]*/ null;
+
+    if (tokenFromServer) {
+        localStorage.setItem('msme_jwt_token', tokenFromServer);
+
+        const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
+        const expireTime = Date.now() + ONE_DAY_IN_MS;
+        localStorage.setItem('msme_token_expire', expireTime);
+    }
+
+    function checkSessionSecurity() {
+        const token = localStorage.getItem('msme_jwt_token');
+        const expireTime = localStorage.getItem('msme_token_expire');
+
+        if (!token || !expireTime) {
+            window.location.href = "/auth/page";
+            return;
+        }
+
+        if (Date.now() > parseInt(expireTime)) {
+            // Hết hạn 1 ngày -> Xóa sạch dấu vết và tự động logout
+            localStorage.removeItem('msme_jwt_token');
+            localStorage.removeItem('msme_token_expire');
+            alert("⚠️ Phiên làm việc của bạn đã hết hạn bảo mật. Vui lòng đăng nhập lại!");
+            window.location.href = "/auth/page";
+        }
+    }
+    function logout() {
+        localStorage.removeItem('msme_jwt_token');
+        localStorage.removeItem('msme_token_expire');
+        window.location.href = "/auth/page";
+    }
+    checkSessionSecurity();
+    setInterval(checkSessionSecurity, 30000);
+</script>
+</body>
+</html>

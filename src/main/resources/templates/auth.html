@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSME Clinic - Thymeleaf Testing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col items-center justify-center p-6">
+
+<div class="bg-gray-800 p-8 rounded-xl shadow-2xl w-full max-w-md mb-6 border border-gray-700">
+    <h1 class="text-3xl font-bold text-center text-blue-400 mb-6 tracking-wide">PHÒNG KHAM MSME</h1>
+
+    <div th:if="${message}" class="mb-4 p-3 rounded-lg text-sm bg-blue-950/50 text-blue-400 border border-blue-800 text-center font-medium" th:text="${message}"></div>
+    <div th:if="${error}" class="mb-4 p-3 rounded-lg text-sm bg-red-950/50 text-red-400 border border-red-800 text-center font-medium" th:text="${error}"></div>
+
+    <div class="flex mb-6 border-b border-gray-700">
+        <button id="tabLogin" class="w-1/2 pb-2 font-medium text-center border-b-2 border-blue-500 text-blue-400" onclick="switchTab('login')">Đăng Nhập</button>
+        <button id="tabRegister" class="w-1/2 pb-2 font-medium text-center text-gray-400" onclick="switchTab('register')">Đăng Ký</button>
+    </div>
+
+    <form id="formLogin" th:action="@{/auth/login}" method="POST" class="space-y-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-400">Tài khoản</label>
+            <input type="text" name="username" class="mt-1 block w-full p-2.5 bg-gray-700 border border-gray-600 rounded-lg text-white" required>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-400">Mật khẩu</label>
+            <input type="password" name="password" class="mt-1 block w-full p-2.5 bg-gray-700 border border-gray-600 rounded-lg text-white" required>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white p-2.5 rounded-lg hover:bg-blue-700 font-medium transition-colors">Xác Nhận Đăng Nhập</button>
+    </form>
+
+    <form id="formRegister" th:action="@{/auth/register}" method="POST" class="space-y-4 hidden">
+
+        <div>
+            <label class="block text-sm font-medium text-gray-400">Tài khoản <span class="text-red-500">*</span></label>
+            <input type="text" name="username"
+                   pattern="^[a-zA-Z0-9_]{3,20}$"
+                   title="Viết liền không dấu, từ 3-20 ký tự (chỉ gồm chữ cái, số, gạch dưới)"
+                   class="mt-1 block w-full p-2.5 bg-gray-700 border border-gray-600 rounded-lg text-white" required placeholder="Nhập tên đăng nhập">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-400">Mật khẩu <span class="text-red-500">*</span></label>
+            <input type="password" name="password"
+                   minlength="6"
+                   title="Mật khẩu phải chứa ít nhất 6 ký tự"
+                   class="mt-1 block w-full p-2.5 bg-gray-700 border border-gray-600 rounded-lg text-white" required placeholder="••••••••">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-400">Họ và Tên <span class="text-red-500">*</span></label>
+            <input type="text" name="fullName"
+                   pattern="^[\p{L}\s]+$"
+                   title="Họ tên không được chứa số hoặc ký tự đặc biệt"
+                   class="mt-1 block w-full p-2.5 bg-gray-700 border border-gray-600 rounded-lg text-white" required placeholder="Nguyễn Văn A">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-400">Email <span class="text-red-500">*</span></label>
+            <input type="email" name="email"
+                   class="mt-1 block w-full p-2.5 bg-gray-700 border border-gray-600 rounded-lg text-white" required placeholder="nguyenvana@gmail.com">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-400">Số điện thoại</label>
+            <input type="text" name="phoneNumber"
+                   pattern="^(0[3|5|7|8|9])+([0-9]{8})$"
+                   title="Vui lòng nhập đúng số điện thoại 10 số (Bắt đầu bằng 09, 03, 08...)"
+                   class="mt-1 block w-full p-2.5 bg-gray-700 border border-gray-600 rounded-lg text-white" placeholder="0912345678">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-400">Ngày sinh</label>
+            <input type="date" name="dateOfBirth" class="mt-1 block w-full p-2.5 bg-gray-700 border border-gray-600 rounded-lg text-white">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-400">Giới tính</label>
+            <select name="gender" class="mt-1 block w-full p-2.5 bg-gray-700 border border-gray-600 rounded-lg text-white">
+                <option value="">-- Chọn giới tính --</option>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+                <option value="Khác">Khác</option>
+            </select>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-400">Địa chỉ</label>
+            <input type="text" name="address" class="mt-1 block w-full p-2.5 bg-gray-700 border border-gray-600 rounded-lg text-white" placeholder="Số nhà, ngõ phố, quận huyện...">
+        </div>
+
+        <button type="submit" class="w-full bg-green-600 text-white p-2.5 rounded-lg hover:bg-green-700 font-medium transition-colors">Đăng Ký Tài Khoản</button>
+    </form>
+</div>
+
+<script>
+    function switchTab(type) {
+        if (type === 'login') {
+            document.getElementById('formLogin').classList.remove('hidden');
+            document.getElementById('formRegister').classList.add('hidden');
+            document.getElementById('tabLogin').className = "w-1/2 pb-2 font-medium text-center border-b-2 border-blue-500 text-blue-400";
+            document.getElementById('tabRegister').className = "w-1/2 pb-2 font-medium text-center text-gray-400";
+        } else {
+            document.getElementById('formLogin').classList.add('hidden');
+            document.getElementById('formRegister').classList.remove('hidden');
+            document.getElementById('tabLogin').className = "w-1/2 pb-2 font-medium text-center text-gray-400";
+            document.getElementById('tabRegister').className = "w-1/2 pb-2 font-medium text-center border-b-2 border-green-500 text-green-400";
+        }
+    }
+</script>
+</body>
+</html>
