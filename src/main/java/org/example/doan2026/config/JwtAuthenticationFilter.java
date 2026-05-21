@@ -1,4 +1,4 @@
-package org.example.doan2026.Config;
+package org.example.doan2026.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

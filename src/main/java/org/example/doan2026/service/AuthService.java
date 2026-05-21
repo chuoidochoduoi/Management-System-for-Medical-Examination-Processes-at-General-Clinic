@@ -1,10 +1,10 @@
-package org.example.doan2026.Service;
+package org.example.doan2026.service;
 
-import org.example.doan2026.Config.JwtTokenProvider;
+import org.example.doan2026.config.JwtTokenProvider;
 import org.example.doan2026.DTO.request.LoginRequest;
 import org.example.doan2026.DTO.response.LoginResponse;
-import org.example.doan2026.Model.User;
-import org.example.doan2026.Repository.UserRepository;
+import org.example.doan2026.model.User;
+import org.example.doan2026.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +26,7 @@ public class AuthService {
             return "Tên đăng nhập đã tồn tại trên hệ thống!";
         }
 
-        if (userRepository.existsByEmail(user.getEmail())) {
-            return "Email này đã được sử dụng!";
-        }
+
 
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encryptedPassword);

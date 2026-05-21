@@ -1,11 +1,11 @@
-package org.example.doan2026.Controller;
+package org.example.doan2026.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.example.doan2026.Model.User;
-import org.example.doan2026.Repository.UserRepository;
-import org.example.doan2026.Service.AuthService;
+import org.example.doan2026.model.User;
+import org.example.doan2026.repository.UserRepository;
+import org.example.doan2026.service.AuthService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

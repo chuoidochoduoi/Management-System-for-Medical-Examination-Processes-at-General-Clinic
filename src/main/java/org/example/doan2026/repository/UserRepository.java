@@ -1,6 +1,6 @@
-package org.example.doan2026.Repository;
+package org.example.doan2026.repository;
 
-import org.example.doan2026.Model.User;
+import org.example.doan2026.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
